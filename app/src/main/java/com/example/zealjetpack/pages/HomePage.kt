@@ -66,8 +66,8 @@ fun HomePage(
     val newArrivalsProducts by viewModel.newArrivalsProducts.observeAsState(emptyList())
     LaunchedEffect(Unit) {
         viewModel.getHomeRequiredData()
-        viewModel.fetchFeaturedProduct("")
-        viewModel.fetchNewArrivalsProduct("")
+        viewModel.fetchFeaturedProduct()
+        viewModel.fetchNewArrivalsProduct()
     }
     if (loading) {
         LoadingView()

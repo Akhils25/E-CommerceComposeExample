@@ -16,23 +16,6 @@ import java.util.concurrent.TimeUnit
 
 interface RetrofitService {
 
-    @Headers("Accept: application/json")
-    @POST("home")
-    fun getHomeData(
-        @Body request: RequestBody
-    ): Call<HomeDataResponseModel>
-    @Headers("Accept: application/json")
-    @POST("featured-products")
-    fun getFeaturedProduct(
-        @Body request: RequestBody
-    ): Call<FeaturedProductResponseModel>
-
-    @Headers("Accept: application/json")
-    @POST("latest-products")
-    fun getNewArrivalsProduct(
-        @Body request: RequestBody
-    ): Call<NewArrivalsProductResponseModel>
-
     companion object {
         private var retrofitService: RetrofitService? = null
         private var prevUrl = ""
@@ -52,11 +35,11 @@ interface RetrofitService {
         private fun getApiService(url: String) {
 
             val retrofit = Retrofit.Builder().baseUrl(url).client(
-                    OkHttpClient.Builder().addInterceptor(HttpLoggingInterceptor().apply {
-                            level = HttpLoggingInterceptor.Level.BODY
-                        }).readTimeout(60, TimeUnit.SECONDS).writeTimeout(60, TimeUnit.SECONDS)
-                        .connectTimeout(60, TimeUnit.SECONDS).build()
-                ).addConverterFactory(GsonConverterFactory.create()).build()
+                OkHttpClient.Builder().addInterceptor(HttpLoggingInterceptor().apply {
+                    level = HttpLoggingInterceptor.Level.BODY
+                }).readTimeout(60, TimeUnit.SECONDS).writeTimeout(60, TimeUnit.SECONDS)
+                    .connectTimeout(60, TimeUnit.SECONDS).build()
+            ).addConverterFactory(GsonConverterFactory.create()).build()
             retrofitService = retrofit.create(RetrofitService::class.java)
         }
     }

@@ -3,7 +3,6 @@ package com.example.zealjetpack.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.zealjetpack.Constants
 import com.example.zealjetpack.model.FeaturedProductResponseModel
 import com.example.zealjetpack.model.HomeDataResponseModel
 import com.example.zealjetpack.model.NewArrivalsProductResponseModel
@@ -39,146 +38,145 @@ class HomeViewModel : ViewModel() {
 
 
     fun getHomeRequiredData(
-        customerId: String = "",
-        version: String = "1.0"
+
     ) {
         _isLoading.value = true
 
-        val requestBody = JSONObject().apply {
-            put("mappingCode", Constants.mappingCode)
-            put("deviceApkVersion", version)
-            put("deviceType", Constants.deviceType)
-            put("customerId", customerId)
-        }.toString().toRequestBody("application/json".toMediaTypeOrNull())
+        bannerList.clear()
+        bannerList.add(
+            HomeDataResponseModel.Banner(
+                "1",
+                "https://images.pexels.com/photos/616401/pexels-photo-616401.jpeg",
+                "banner One"
+            )
+        )
+        bannerList.add(
+            HomeDataResponseModel.Banner(
+                "2",
+                "https://images.pexels.com/photos/1435904/pexels-photo-1435904.jpeg",
+                "banner Two"
+            )
+        )
+        bannerList.add(
+            HomeDataResponseModel.Banner(
+                "3",
+                "https://images.pexels.com/photos/264537/pexels-photo-264537.jpeg",
+                "banner Three"
+            )
+        )
+        _bannersData.value = bannerList
 
-        try {
-            RetrofitService.getInstance(Const.BASE_URL).getHomeData(
-                requestBody
-            ).enqueue(object : Callback<HomeDataResponseModel> {
-                override fun onResponse(
-                    call: Call<HomeDataResponseModel>,
-                    response: Response<HomeDataResponseModel>
-                ) {
-                    _isLoading.value = false
-                    if (response.isSuccessful && response.body()?.code == 200) {
-                        val bannerData = response.body()?.banner?.filterNotNull() ?: emptyList()
-                        val featuredData =
-                            response.body()?.productFeature?.filterNotNull() ?: emptyList()
-                        //_address.value = response.body()?.address
-                        //_cartCount.value = response.body()?.cartCount ?: 0
-                        if (!bannerData.isNullOrEmpty()) {
-                            bannerList.clear()
-                            bannerList.addAll(bannerData)
-                            _bannersData.value = bannerList
-                        }
-                        /*featuresFullList.clear()
-                        featuresFullList.addAll(featuredData)
-                        _featuresListData.value = featuresFullList
-                        if (!response.body()?.zealFreshWay.isNullOrEmpty()) {
-                            _zealWaysData.value = response.body()?.zealFreshWay
-                        }
-                        if (response.body()?.watchNow != null) {
-                            _youtubeVideoData.value = response.body()?.watchNow
-                        }
-                        if (response.body()?.referAndEarn != null) {
-                            _referFriend.value = response.body()?.referAndEarn
-                        }*/
-                    } else {
-                        _isLoading.value = false
-                    }
-                }
-
-                override fun onFailure(call: Call<HomeDataResponseModel>, t: Throwable) {
-                     _isLoading.value = false
-                }
-
-            })
-        } catch (e: Exception) {
-            e.printStackTrace()
-            _isLoading.value = false
-        }
+        _isLoading.value = false
     }
 
-    fun fetchFeaturedProduct(customerId: String) {
+    fun fetchFeaturedProduct() {
         _isLoading.value = true
 
-        val requestBody = JSONObject().apply {
-            put("mappingCode", Constants.mappingCode)
-            put("customerId", customerId)
-            put("page", 1)
-        }.toString().toRequestBody("application/json".toMediaTypeOrNull())
-
-        try {
-            RetrofitService.getInstance(Const.BASE_URL).getFeaturedProduct(
-                requestBody
-            ).enqueue(object : Callback<FeaturedProductResponseModel> {
-                override fun onResponse(
-                    call: Call<FeaturedProductResponseModel>,
-                    response: Response<FeaturedProductResponseModel>
-                ) {
-                    _isLoading.value = false
-                    if (response.isSuccessful && response.body()?.code == 200) {
-                        val data = response.body()?.data?.filterNotNull() ?: emptyList()
-                        if (!data.isNullOrEmpty()) {
-                            featuredFullList.clear()
-                            featuredFullList.addAll(data)
-                            _featuredProducts.value = featuredFullList
-                        }
-                    } else {
-                        _isLoading.value = false
-                    }
-                }
-
-                override fun onFailure(call: Call<FeaturedProductResponseModel>, t: Throwable) {
-                    _isLoading.value = false
-                }
-
-            })
-        } catch (e: Exception) {
-            e.printStackTrace()
-            _isLoading.value = false
-        }
+        featuredFullList.clear()
+        featuredFullList.add(
+            FeaturedProductResponseModel.Data(
+                availableProductCount = 20,
+                currency = "INR",
+                expirationDate = "2026-01-31",
+                isInCart = false,
+                offerType = "PERCENTAGE",
+                offerValues = 20,
+                productCategoryName = "Chicken",
+                productId = "101",
+                productImage = "https://images.pexels.com/photos/616401/pexels-photo-616401.jpeg",
+                productMRP = 280.0,
+                productName = "Fresh Chicken Curry Cut",
+                productQuantityInCart = 0,
+                productRemarks = "Fresh farm chicken",
+                quantity = 500,
+                sellingPrice = 220.0,
+                stockStatus = true,
+                totalProductCount = 100,
+                unitType = "gm",
+                indirectCartmessage = null,
+                indirectCartAdd = 0
+            )
+        )
+        featuredFullList.add(
+            FeaturedProductResponseModel.Data(
+                availableProductCount = 15,
+                currency = "INR",
+                expirationDate = "2026-02-10",
+                isInCart = false,
+                offerType = "PERCENTAGE",
+                offerValues = 15,
+                productCategoryName = "Fish",
+                productId = "102",
+                productImage = "https://images.pexels.com/photos/264537/pexels-photo-264537.jpeg",
+                productMRP = 350.0,
+                productName = "Fresh Seer Fish",
+                productQuantityInCart = 0,
+                productRemarks = "Sea fresh",
+                quantity = 1,
+                sellingPrice = 299.0,
+                stockStatus = true,
+                totalProductCount = 60,
+                unitType = "kg",
+                indirectCartmessage = null,
+                indirectCartAdd = 0
+            )
+        )
+        featuredFullList.add(
+            FeaturedProductResponseModel.Data(
+                availableProductCount = 25,
+                currency = "INR",
+                expirationDate = "2026-01-25",
+                isInCart = false,
+                offerType = "FLAT",
+                offerValues = 50,
+                productCategoryName = "Mutton",
+                productId = "103",
+                productImage = "https://images.pexels.com/photos/1435904/pexels-photo-1435904.jpeg",
+                productMRP = 750.0,
+                productName = "Premium Goat Mutton",
+                productQuantityInCart = 0,
+                productRemarks = "Tender & juicy",
+                quantity = 500,
+                sellingPrice = 699.0,
+                stockStatus = true,
+                totalProductCount = 40,
+                unitType = "gm",
+                indirectCartmessage = null,
+                indirectCartAdd = 0
+            )
+        )
+        featuredFullList.add(
+            FeaturedProductResponseModel.Data(
+                availableProductCount = 30,
+                currency = "INR",
+                expirationDate = "2026-02-15",
+                isInCart = false,
+                offerType = "PERCENTAGE",
+                offerValues = 10,
+                productCategoryName = "Eggs",
+                productId = "104",
+                productImage = "https://images.pexels.com/photos/4110255/pexels-photo-4110255.jpeg",
+                productMRP = 90.0,
+                productName = "Farm Fresh Eggs (6 pcs)",
+                productQuantityInCart = 0,
+                productRemarks = "Organic eggs",
+                quantity = 6,
+                sellingPrice = 80.0,
+                stockStatus = true,
+                totalProductCount = 200,
+                unitType = "pcs",
+                indirectCartmessage = null,
+                indirectCartAdd = 0
+            )
+        )
+        _featuredProducts.value = featuredFullList
+        _isLoading.value = false
     }
 
-    fun fetchNewArrivalsProduct(customerId: String) {
-        _isLoading.value = true
+    fun fetchNewArrivalsProduct() {
+        _isLoading.value = false
 
-        val requestBody = JSONObject().apply {
-            put("mappingCode", Constants.mappingCode)
-            put("customerId", customerId)
-            put("page", 1)
-        }.toString().toRequestBody("application/json".toMediaTypeOrNull())
 
-        try {
-            RetrofitService.getInstance(Const.BASE_URL).getNewArrivalsProduct(
-                requestBody
-            ).enqueue(object : Callback<NewArrivalsProductResponseModel> {
-                override fun onResponse(
-                    call: Call<NewArrivalsProductResponseModel>,
-                    response: Response<NewArrivalsProductResponseModel>
-                ) {
-                    _isLoading.value = false
-                    if (response.isSuccessful && response.body()?.code == 200) {
-                        val data = response.body()?.data?.filterNotNull() ?: emptyList()
-                        if (data.isNotEmpty()) {
-                            newArrivalsFullList.clear()
-                            newArrivalsFullList.addAll(data)
-                            _newArrivalsProducts.value = newArrivalsFullList
-                        }
-                    } else {
-                        _isLoading.value = false
-                    }
-                }
-
-                override fun onFailure(call: Call<NewArrivalsProductResponseModel>, t: Throwable) {
-                    _isLoading.value = false
-                }
-
-            })
-        } catch (e: Exception) {
-            e.printStackTrace()
-            _isLoading.value = false
-        }
     }
 
 }
