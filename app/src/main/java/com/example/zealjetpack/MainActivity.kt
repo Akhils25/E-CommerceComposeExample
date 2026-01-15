@@ -37,6 +37,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.zealjetpack.pages.HomePage
+import com.example.zealjetpack.pages.ProductDetailPage
 import com.example.zealjetpack.pages.WelcomePage
 import com.example.zealjetpack.ui.theme.ZealJetPackTheme
 import com.example.zealjetpack.viewmodel.HomeViewModel
@@ -60,7 +61,16 @@ class MainActivity : ComponentActivity() {
                 }
 
                 composable("home") {
-                    HomePage()
+                    HomePage(
+                        onItemClick = {
+                            navController.navigate("Detail")
+                        }
+                    )
+                }
+
+
+                composable("Detail") {
+                    ProductDetailPage()
                 }
             }
         }

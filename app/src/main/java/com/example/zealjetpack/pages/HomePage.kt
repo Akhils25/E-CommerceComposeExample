@@ -26,7 +26,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -49,6 +48,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
+import com.example.zealjetpack.Utility.LoadingView
 import com.example.zealjetpack.model.FeaturedProductResponseModel
 import com.example.zealjetpack.model.HomeDataResponseModel
 import com.example.zealjetpack.model.NewArrivalsProductResponseModel
@@ -57,6 +57,7 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun HomePage(
+    onItemClick: () -> Unit = {}
 ) {
     val viewModel: HomeViewModel = viewModel()
     val loading by viewModel.isLoading.observeAsState(initial = false)
@@ -74,18 +75,9 @@ fun HomePage(
         HomeContent(
             banners = banners,
             featuredProductResponseModel = featuredProducts,
-            newArrivalsProductResponseModel = newArrivalsProducts
+            newArrivalsProductResponseModel = newArrivalsProducts,
+            onItemClick
         )
-    }
-}
-
-@Composable
-fun LoadingView() {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        CircularProgressIndicator()
     }
 }
 
@@ -93,7 +85,8 @@ fun LoadingView() {
 fun HomeContent(
     banners: List<HomeDataResponseModel.Banner>,
     featuredProductResponseModel: List<FeaturedProductResponseModel.Data>,
-    newArrivalsProductResponseModel: List<NewArrivalsProductResponseModel.Data>
+    newArrivalsProductResponseModel: List<NewArrivalsProductResponseModel.Data>,
+    onItemClick: () -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -114,12 +107,18 @@ fun HomeContent(
                 Spacer(modifier = Modifier.height(16.dp))
             }
             item {
-                FeaturedProductsSection(products = featuredProductResponseModel)
+                FeaturedProductsSection(
+                    products = featuredProductResponseModel,
+                    onItemClick
+                )
                 Spacer(modifier = Modifier.height(16.dp))
             }
 
             item {
-                NewArrivalsProductsSection(products = newArrivalsProductResponseModel)
+                NewArrivalsProductsSection(
+                    products = newArrivalsProductResponseModel,
+                    onItemClick
+                )
                 Spacer(modifier = Modifier.height(16.dp))
             }
         }
@@ -230,7 +229,8 @@ fun BannerItem(
 
 @Composable
 fun NewArrivalsProductsSection(
-    products: List<NewArrivalsProductResponseModel.Data>
+    products: List<NewArrivalsProductResponseModel.Data>,
+    onItemClick: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -258,7 +258,7 @@ fun NewArrivalsProductsSection(
 
         LazyRow {
             items(products) { it ->
-                ProductCardNewArrivals(it) // For New Arrivals Products Listing
+                ProductCardNewArrivals(it, onItemClick) // For New Arrivals Products Listing
             }
         }
     }
@@ -266,7 +266,8 @@ fun NewArrivalsProductsSection(
 
 @Composable
 fun FeaturedProductsSection(
-    products: List<FeaturedProductResponseModel.Data>
+    products: List<FeaturedProductResponseModel.Data>,
+    onItemClick: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -296,7 +297,7 @@ fun FeaturedProductsSection(
 
         LazyRow {
             items(products) { it ->
-                ProductCardFeatured(it) // For Featured Products Listing
+                ProductCardFeatured(it, onItemClick) // For Featured Products Listing
             }
         }
     }
@@ -304,7 +305,8 @@ fun FeaturedProductsSection(
 
 @Composable
 fun ProductCardNewArrivals(
-    product: NewArrivalsProductResponseModel.Data
+    product: NewArrivalsProductResponseModel.Data,
+    onItemClick: () -> Unit
 ) {
     Card(
         modifier = Modifier
@@ -316,6 +318,7 @@ fun ProductCardNewArrivals(
             containerColor = Color.White
         ),
         elevation = CardDefaults.cardElevation(2.dp),
+        onClick = onItemClick
     ) {
         Column(
             modifier = Modifier
@@ -403,7 +406,8 @@ fun ProductCardNewArrivals(
 
 @Composable
 fun ProductCardFeatured(
-    product: FeaturedProductResponseModel.Data
+    product: FeaturedProductResponseModel.Data,
+    onItemClick: () -> Unit
 ) {
     Card(
         modifier = Modifier
@@ -415,6 +419,7 @@ fun ProductCardFeatured(
             containerColor = Color.White
         ),
         elevation = CardDefaults.cardElevation(2.dp),
+        onClick = onItemClick
     ) {
         Column(
             modifier = Modifier
