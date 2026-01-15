@@ -6,14 +6,6 @@ import androidx.lifecycle.ViewModel
 import com.example.zealjetpack.model.FeaturedProductResponseModel
 import com.example.zealjetpack.model.HomeDataResponseModel
 import com.example.zealjetpack.model.NewArrivalsProductResponseModel
-import com.oges.zealfresh.network.Const
-import com.oges.zealfresh.network.RetrofitService
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody.Companion.toRequestBody
-import org.json.JSONObject
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class HomeViewModel : ViewModel() {
 
