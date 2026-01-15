@@ -47,6 +47,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.zealjetpack.model.FeaturedProductResponseModel
 import com.example.zealjetpack.model.HomeDataResponseModel
@@ -57,7 +58,7 @@ import kotlinx.coroutines.delay
 @Composable
 fun HomePage(
 ) {
-    val viewModel: HomeViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
+    val viewModel: HomeViewModel = viewModel()
     val loading by viewModel.isLoading.observeAsState(initial = false)
     val banners by viewModel.bannerData.observeAsState(emptyList())
     val featuredProducts by viewModel.featuredProducts.observeAsState(emptyList())

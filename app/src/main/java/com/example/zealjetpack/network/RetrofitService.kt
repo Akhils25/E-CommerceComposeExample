@@ -34,7 +34,7 @@ interface RetrofitService {
     ): Call<NewArrivalsProductResponseModel>
 
     companion object {
-        var retrofitService: RetrofitService? = null
+        private var retrofitService: RetrofitService? = null
         private var prevUrl = ""
 
         fun getInstance(url: String = Const.BASE_URL): RetrofitService {
