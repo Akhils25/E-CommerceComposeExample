@@ -174,9 +174,129 @@ class HomeViewModel : ViewModel() {
     }
 
     fun fetchNewArrivalsProduct() {
+        _isLoading.value = true
+        newArrivalsFullList.clear()
+        newArrivalsFullList.add(
+            NewArrivalsProductResponseModel.Data(
+                availableProductCount = 120,
+                currency = "INR",
+                expirationDate = "2026-03-15",
+                isInCart = false,
+                offerType = "PERCENTAGE",
+                offerValues = 10,
+                productCategoryName = "Meats",
+                productId = "MEAT001",
+                productImage = "https://images.unsplash.com/photo-1604908177225-3e7c8fbd4a63",
+                productMRP = 650.0,
+                productName = "Fresh Chicken Curry Cut",
+                productQuantityInCart = 0,
+                productRemarks = "Farm fresh, antibiotic-free",
+                quantity = 1,
+                sellingPrice = 585.0,
+                stockStatus = true,
+                totalProductCount = 120,
+                indirectCartAdd = 0,
+                indirectCartmessage = null,
+                unitType = "500g"
+            )
+        )
+        newArrivalsFullList.add(
+            NewArrivalsProductResponseModel.Data(
+                availableProductCount = 120,
+                currency = "INR",
+                expirationDate = "2026-03-15",
+                isInCart = false,
+                offerType = "PERCENTAGE",
+                offerValues = 10,
+                productCategoryName = "Meats",
+                productId = "MEAT001",
+                productImage = "https://images.unsplash.com/photo-1604908177225-3e7c8fbd4a63",
+                productMRP = 650.0,
+                productName = "Fresh Chicken Curry Cut",
+                productQuantityInCart = 0,
+                productRemarks = "Farm fresh, antibiotic-free",
+                quantity = 1,
+                sellingPrice = 585.0,
+                stockStatus = true,
+                totalProductCount = 120,
+                indirectCartAdd = 0,
+                indirectCartmessage = null,
+                unitType = "500g"
+            )
+        )
+        newArrivalsFullList.add(
+            NewArrivalsProductResponseModel.Data(
+                availableProductCount = 80,
+                currency = "INR",
+                expirationDate = "2026-02-28",
+                isInCart = true,
+                offerType = "FLAT",
+                offerValues = 50,
+                productCategoryName = "Meats",
+                productId = "MEAT002",
+                productImage = "https://images.unsplash.com/photo-1603046891744-76e6481cfdb3",
+                productMRP = 950.0,
+                productName = "Fresh Mutton Boneless",
+                productQuantityInCart = 1,
+                productRemarks = "Tender and fresh cut",
+                quantity = 1,
+                sellingPrice = 900.0,
+                stockStatus = true,
+                totalProductCount = 80,
+                indirectCartAdd = 1,
+                indirectCartmessage = "Already added to cart",
+                unitType = "500g"
+            )
+        )
+        newArrivalsFullList.add(
+            NewArrivalsProductResponseModel.Data(
+                availableProductCount = 60,
+                currency = "INR",
+                expirationDate = "2026-04-10",
+                isInCart = false,
+                offerType = "PERCENTAGE",
+                offerValues = 15,
+                productCategoryName = "Meats",
+                productId = "MEAT003",
+                productImage = "https://images.unsplash.com/photo-1625943555419-56a2cb596640",
+                productMRP = 780.0,
+                productName = "Fresh Fish Fillet",
+                productQuantityInCart = 0,
+                productRemarks = "Cleaned & ready to cook",
+                quantity = 1,
+                sellingPrice = 663.0,
+                stockStatus = true,
+                totalProductCount = 60,
+                indirectCartAdd = 0,
+                indirectCartmessage = null,
+                unitType = "500g"
+            )
+        )
+        newArrivalsFullList.add(
+            NewArrivalsProductResponseModel.Data(
+                availableProductCount = 100,
+                currency = "INR",
+                expirationDate = "2026-03-05",
+                isInCart = false,
+                offerType = null,
+                offerValues = null,
+                productCategoryName = "Meats",
+                productId = "MEAT004",
+                productImage = "https://images.unsplash.com/photo-1606756790138-261d2b21cd75",
+                productMRP = 420.0,
+                productName = "Pork Belly Slices",
+                productQuantityInCart = 0,
+                productRemarks = "Juicy and premium quality",
+                quantity = 1,
+                sellingPrice = 420.0,
+                stockStatus = true,
+                totalProductCount = 100,
+                indirectCartAdd = 0,
+                indirectCartmessage = null,
+                unitType = "500g"
+            )
+        )
+        _newArrivalsProducts.value = newArrivalsFullList
         _isLoading.value = false
-
-
     }
-
 }
