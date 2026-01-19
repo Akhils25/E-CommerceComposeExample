@@ -67,8 +67,6 @@ fun ProductDetailsScreen(
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ) {
-
-            // Top Image
             AsyncImage(
                 model = product?.productImage,
                 contentDescription = product?.productName,
@@ -80,8 +78,6 @@ fun ProductDetailsScreen(
 
             Spacer(modifier = Modifier.height(80.dp))
         }
-
-        // White rounded card (overlapping)
         ProductInfoCard(product)
 
         BottomCartBar(
@@ -213,7 +209,7 @@ fun BottomCartBar(product: Product?, modifier: Modifier) {
                 shape = RoundedCornerShape(12.dp),
                 enabled = product?.stockStatus ?: false,
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFF2E7D32),
+                    containerColor = Color.Black,
                     contentColor = Color.White
                 )
             ) {

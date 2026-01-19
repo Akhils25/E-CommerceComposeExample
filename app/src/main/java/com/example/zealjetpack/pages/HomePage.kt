@@ -398,7 +398,7 @@ fun ProductCardNewArrivals(
             Button(
                 onClick = { },
                 modifier = Modifier.fillMaxWidth(),
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2E7D32))
+                colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
             ) {
                 Text("BUY", color = Color.White)
             }
@@ -501,7 +501,7 @@ fun ProductCardFeatured(
             Button(
                 onClick = { },
                 modifier = Modifier.fillMaxWidth(),
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2E7D32))
+                colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
             ) {
                 Text("BUY", color = Color.White)
             }
