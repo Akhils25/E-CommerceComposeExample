@@ -4,9 +4,11 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.zealjetpack.pages.HomePage
 import com.example.zealjetpack.pages.ProductDetailPage
 import com.example.zealjetpack.pages.WelcomePage
@@ -31,15 +33,23 @@ class MainActivity : ComponentActivity() {
 
                 composable("home") {
                     HomePage(
-                        onItemClick = {
-                            navController.navigate("Detail")
+                        onItemClick = { productId ->
+                            navController.navigate("Detail/$productId")
                         }
                     )
                 }
 
 
-                composable("Detail") {
-                    ProductDetailPage()
+                composable(
+                    route = "detail/{productId}",
+                    arguments = listOf(
+                        navArgument("productId") { type = NavType.StringType }
+                    )
+                ) { backStackEntry ->
+
+                    val productId = backStackEntry.arguments?.getString("productId") ?: ""
+
+                    ProductDetailPage(productId = productId)
                 }
             }
         }

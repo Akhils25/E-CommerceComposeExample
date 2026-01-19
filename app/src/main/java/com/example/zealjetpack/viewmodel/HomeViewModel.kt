@@ -38,21 +38,21 @@ class HomeViewModel : ViewModel() {
         bannerList.add(
             HomeDataResponseModel.Banner(
                 "1",
-                "https://images.pexels.com/photos/616401/pexels-photo-616401.jpeg",
+                "https://i.postimg.cc/YCVw56j0/banner-1.png",
                 "banner One"
             )
         )
         bannerList.add(
             HomeDataResponseModel.Banner(
                 "2",
-                "https://images.pexels.com/photos/1435904/pexels-photo-1435904.jpeg",
+                "https://i.postimg.cc/0NgBGcb9/banner-2.png",
                 "banner Two"
             )
         )
         bannerList.add(
             HomeDataResponseModel.Banner(
                 "3",
-                "https://images.pexels.com/photos/264537/pexels-photo-264537.jpeg",
+                "https://i.postimg.cc/V6gZ8w4V/banner-3.png",
                 "banner Three"
             )
         )
@@ -75,7 +75,7 @@ class HomeViewModel : ViewModel() {
                 offerValues = 20,
                 productCategoryName = "Chicken",
                 productId = "101",
-                productImage = "https://images.pexels.com/photos/616401/pexels-photo-616401.jpeg",
+                productImage = "https://i.postimg.cc/SR5wBqxb/fea7cdf28187ec4541c740567cafbb71e01fc60c.jpg",
                 productMRP = 280.0,
                 productName = "Fresh Chicken Curry Cut",
                 productQuantityInCart = 0,
@@ -99,7 +99,7 @@ class HomeViewModel : ViewModel() {
                 offerValues = 15,
                 productCategoryName = "Fish",
                 productId = "102",
-                productImage = "https://images.pexels.com/photos/264537/pexels-photo-264537.jpeg",
+                productImage = "https://i.postimg.cc/SR5wBqxb/fea7cdf28187ec4541c740567cafbb71e01fc60c.jpg",
                 productMRP = 350.0,
                 productName = "Fresh Seer Fish",
                 productQuantityInCart = 0,
@@ -123,7 +123,7 @@ class HomeViewModel : ViewModel() {
                 offerValues = 50,
                 productCategoryName = "Mutton",
                 productId = "103",
-                productImage = "https://images.pexels.com/photos/1435904/pexels-photo-1435904.jpeg",
+                productImage = "https://i.postimg.cc/SR5wBqxb/fea7cdf28187ec4541c740567cafbb71e01fc60c.jpg",
                 productMRP = 750.0,
                 productName = "Premium Goat Mutton",
                 productQuantityInCart = 0,
@@ -147,7 +147,7 @@ class HomeViewModel : ViewModel() {
                 offerValues = 10,
                 productCategoryName = "Eggs",
                 productId = "104",
-                productImage = "https://images.pexels.com/photos/4110255/pexels-photo-4110255.jpeg",
+                productImage = "https://i.postimg.cc/SR5wBqxb/fea7cdf28187ec4541c740567cafbb71e01fc60c.jpg",
                 productMRP = 90.0,
                 productName = "Farm Fresh Eggs (6 pcs)",
                 productQuantityInCart = 0,
@@ -178,31 +178,7 @@ class HomeViewModel : ViewModel() {
                 offerValues = 10,
                 productCategoryName = "Meats",
                 productId = "MEAT001",
-                productImage = "https://images.unsplash.com/photo-1604908177225-3e7c8fbd4a63",
-                productMRP = 650.0,
-                productName = "Fresh Chicken Curry Cut",
-                productQuantityInCart = 0,
-                productRemarks = "Farm fresh, antibiotic-free",
-                quantity = 1,
-                sellingPrice = 585.0,
-                stockStatus = true,
-                totalProductCount = 120,
-                indirectCartAdd = 0,
-                indirectCartmessage = null,
-                unitType = "500g"
-            )
-        )
-        newArrivalsFullList.add(
-            NewArrivalsProductResponseModel.Data(
-                availableProductCount = 120,
-                currency = "INR",
-                expirationDate = "2026-03-15",
-                isInCart = false,
-                offerType = "PERCENTAGE",
-                offerValues = 10,
-                productCategoryName = "Meats",
-                productId = "MEAT001",
-                productImage = "https://images.unsplash.com/photo-1604908177225-3e7c8fbd4a63",
+                productImage = "https://i.postimg.cc/SR5wBqxb/fea7cdf28187ec4541c740567cafbb71e01fc60c.jpg",
                 productMRP = 650.0,
                 productName = "Fresh Chicken Curry Cut",
                 productQuantityInCart = 0,
@@ -226,7 +202,7 @@ class HomeViewModel : ViewModel() {
                 offerValues = 50,
                 productCategoryName = "Meats",
                 productId = "MEAT002",
-                productImage = "https://images.unsplash.com/photo-1603046891744-76e6481cfdb3",
+                productImage = "https://i.postimg.cc/SR5wBqxb/fea7cdf28187ec4541c740567cafbb71e01fc60c.jpg",
                 productMRP = 950.0,
                 productName = "Fresh Mutton Boneless",
                 productQuantityInCart = 1,
@@ -250,7 +226,7 @@ class HomeViewModel : ViewModel() {
                 offerValues = 15,
                 productCategoryName = "Meats",
                 productId = "MEAT003",
-                productImage = "https://images.unsplash.com/photo-1625943555419-56a2cb596640",
+                productImage = "https://i.postimg.cc/SR5wBqxb/fea7cdf28187ec4541c740567cafbb71e01fc60c.jpg",
                 productMRP = 780.0,
                 productName = "Fresh Fish Fillet",
                 productQuantityInCart = 0,
@@ -274,7 +250,7 @@ class HomeViewModel : ViewModel() {
                 offerValues = null,
                 productCategoryName = "Meats",
                 productId = "MEAT004",
-                productImage = "https://images.unsplash.com/photo-1606756790138-261d2b21cd75",
+                productImage = "https://i.postimg.cc/SR5wBqxb/fea7cdf28187ec4541c740567cafbb71e01fc60c.jpg",
                 productMRP = 420.0,
                 productName = "Pork Belly Slices",
                 productQuantityInCart = 0,

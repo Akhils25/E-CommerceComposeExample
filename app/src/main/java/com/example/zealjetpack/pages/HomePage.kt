@@ -57,7 +57,7 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun HomePage(
-    onItemClick: () -> Unit = {}
+    onItemClick: (String) -> Unit = {}
 ) {
     val viewModel: HomeViewModel = viewModel()
     val loading by viewModel.isLoading.observeAsState(initial = false)
@@ -86,7 +86,7 @@ fun HomeContent(
     banners: List<HomeDataResponseModel.Banner>,
     featuredProductResponseModel: List<FeaturedProductResponseModel.Data>,
     newArrivalsProductResponseModel: List<NewArrivalsProductResponseModel.Data>,
-    onItemClick: () -> Unit
+    onItemClick: (String) -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -230,7 +230,7 @@ fun BannerItem(
 @Composable
 fun NewArrivalsProductsSection(
     products: List<NewArrivalsProductResponseModel.Data>,
-    onItemClick: () -> Unit
+    onItemClick: (String) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -267,7 +267,7 @@ fun NewArrivalsProductsSection(
 @Composable
 fun FeaturedProductsSection(
     products: List<FeaturedProductResponseModel.Data>,
-    onItemClick: () -> Unit
+    onItemClick: (String) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -306,7 +306,7 @@ fun FeaturedProductsSection(
 @Composable
 fun ProductCardNewArrivals(
     product: NewArrivalsProductResponseModel.Data,
-    onItemClick: () -> Unit
+    onItemClick: (String) -> Unit
 ) {
     Card(
         modifier = Modifier
@@ -318,7 +318,9 @@ fun ProductCardNewArrivals(
             containerColor = Color.White
         ),
         elevation = CardDefaults.cardElevation(2.dp),
-        onClick = onItemClick
+        onClick = {
+            onItemClick(product.productId ?: "")
+        }
     ) {
         Column(
             modifier = Modifier
@@ -398,7 +400,7 @@ fun ProductCardNewArrivals(
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2E7D32))
             ) {
-                Text("Add +", color = Color.White)
+                Text("BUY", color = Color.White)
             }
         }
     }
@@ -407,7 +409,7 @@ fun ProductCardNewArrivals(
 @Composable
 fun ProductCardFeatured(
     product: FeaturedProductResponseModel.Data,
-    onItemClick: () -> Unit
+    onItemClick: (String) -> Unit
 ) {
     Card(
         modifier = Modifier
@@ -419,7 +421,9 @@ fun ProductCardFeatured(
             containerColor = Color.White
         ),
         elevation = CardDefaults.cardElevation(2.dp),
-        onClick = onItemClick
+        onClick = {
+            onItemClick(product.productId ?: "")
+        }
     ) {
         Column(
             modifier = Modifier
@@ -499,7 +503,7 @@ fun ProductCardFeatured(
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2E7D32))
             ) {
-                Text("Add +", color = Color.White)
+                Text("BUY", color = Color.White)
             }
         }
     }
