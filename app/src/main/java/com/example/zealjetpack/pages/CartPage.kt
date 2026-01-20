@@ -66,7 +66,7 @@ fun CartPage(
     val loading by viewModel.isLoading.observeAsState(initial = false)
     val product by viewModel.productsDetails.observeAsState()
     LaunchedEffect(Unit) {
-        viewModel.getProductCart("101")
+        viewModel.getProductCart(productId)
     }
     if (loading) {
         LoadingView()

@@ -61,10 +61,10 @@ dependencies {
     implementation(libs.converter.gson)
     implementation(libs.androidx.compose.runtime.livedata)
     implementation(libs.logging.interceptor)
-    implementation("io.coil-kt:coil-compose:2.7.0")
-    implementation("androidx.compose.foundation:foundation:1.10.1")
-    implementation("com.google.accompanist:accompanist-pager:0.30.1")
-    implementation("com.google.accompanist:accompanist-pager-indicators:0.30.1")
+    implementation(libs.coil.compose)
+    implementation(libs.androidx.foundation)
+    implementation(libs.accompanist.pager)
+    implementation(libs.accompanist.pager.indicators)
 
 
 }
