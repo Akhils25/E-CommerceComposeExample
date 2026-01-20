@@ -9,6 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.zealjetpack.pages.CartPage
 import com.example.zealjetpack.pages.HomePage
 import com.example.zealjetpack.pages.ProductDetailPage
 import com.example.zealjetpack.pages.WelcomePage
@@ -49,7 +50,29 @@ class MainActivity : ComponentActivity() {
 
                     val productId = backStackEntry.arguments?.getString("productId") ?: ""
 
-                    ProductDetailPage(productId = productId)
+                    ProductDetailPage(productId = productId, {
+                        navController.popBackStack()
+                    }, {
+                        //navController.navigate("Notification")
+                    }, { productId ->
+                        navController.navigate("Cart/$productId")
+                    })
+                }
+                composable(
+                    route = "Cart/{productId}",
+                    arguments = listOf(
+                        navArgument("productId") { type = NavType.StringType }
+                    )
+                ) { backStackEntry ->
+                    val productId = backStackEntry.arguments?.getString("productId") ?: ""
+
+                    CartPage(productId, {
+                        navController.navigate("home")
+                    }, {
+
+                    }, {
+
+                    })
                 }
             }
         }

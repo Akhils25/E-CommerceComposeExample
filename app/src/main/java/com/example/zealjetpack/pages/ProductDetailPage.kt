@@ -15,12 +15,21 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.IconButton
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -42,6 +51,9 @@ import com.example.zealjetpack.viewmodel.ProductDetailViewModel
 @Composable
 fun ProductDetailPage(
     productId: String,
+    onBack: () -> Unit,
+    onNotification: () -> Unit,
+    checkout: (String) -> Unit
 ) {
     val viewModel: ProductDetailViewModel = viewModel()
     val loading by viewModel.isLoading.observeAsState(initial = false)
@@ -52,40 +64,96 @@ fun ProductDetailPage(
     if (loading) {
         LoadingView()
     } else {
-        ProductDetailsScreen(product)
+        ProductDetailsScreen(product, onBack, onNotification, checkout)
     }
 }
 
 @Composable
 fun ProductDetailsScreen(
-    product: Product?
+    product: Product?,
+    onBack: () -> Unit,
+    onNotification: () -> Unit,
+    checkout: (String) -> Unit
 ) {
-    Box(modifier = Modifier.fillMaxSize()) {
-
-        Column(
+    Scaffold(
+        topBar = {
+            DetailToolBar(
+                onBackClick = onBack,
+                onNotificationClick = onNotification
+            )
+        }
+    ) { padding ->
+        Box(
             modifier = Modifier
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState())
+                .padding(padding)
         ) {
-            AsyncImage(
-                model = product?.productImage,
-                contentDescription = product?.productName,
-                contentScale = ContentScale.Crop,
+
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(500.dp)
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState())
+            ) {
+                AsyncImage(
+                    model = product?.productImage,
+                    contentDescription = product?.productName,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(500.dp)
+                )
+
+                Spacer(modifier = Modifier.height(80.dp))
+            }
+            ProductInfoCard(product)
+
+            BottomCartBar(
+                product = product,
+                modifier = Modifier.align(Alignment.BottomCenter),
+                checkout
             )
 
-            Spacer(modifier = Modifier.height(80.dp))
         }
-        ProductInfoCard(product)
-
-        BottomCartBar(
-            product = product,
-            modifier = Modifier.align(Alignment.BottomCenter)
-        )
-
     }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun DetailToolBar(
+    onNotificationClick: () -> Unit = {},
+    onBackClick: () -> Unit = {}
+) {
+    CenterAlignedTopAppBar(
+        title = {
+            Text(
+                text = "Product Detail",
+                maxLines = 1,
+                color = Color.Black
+            )
+        },
+        navigationIcon = {
+            IconButton(onClick = onBackClick) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = "Back",
+                    tint = Color.Black
+                )
+            }
+        },
+        actions = {
+            IconButton(onClick = onNotificationClick) {
+                Icon(
+                    imageVector = Icons.Default.Notifications,
+                    contentDescription = "Notifications",
+                    tint = Color.Black
+                )
+            }
+        },
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = Color.White
+        )
+    )
+
 }
 
 @Composable
@@ -178,7 +246,7 @@ fun PriceSection(product: Product?) {
 }
 
 @Composable
-fun BottomCartBar(product: Product?, modifier: Modifier) {
+fun BottomCartBar(product: Product?, modifier: Modifier, checkout: (String) -> Unit) {
     Box(
         modifier = modifier
             .fillMaxWidth()
@@ -205,7 +273,7 @@ fun BottomCartBar(product: Product?, modifier: Modifier) {
             }
 
             Button(
-                onClick = {},
+                onClick = { checkout(product?.productId ?: "") },
                 shape = RoundedCornerShape(12.dp),
                 enabled = product?.stockStatus ?: false,
                 colors = ButtonDefaults.buttonColors(
