@@ -1,5 +1,6 @@
 package com.example.zealjetpack.pages
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -9,12 +10,17 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
@@ -30,6 +36,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Shapes
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -41,14 +48,17 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Outline
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.zealjetpack.Utility.LoadingView
+import com.example.zealjetpack.model.CategoryModel
 import com.example.zealjetpack.model.FeaturedProductResponseModel
 import com.example.zealjetpack.model.HomeDataResponseModel
 import com.example.zealjetpack.model.NewArrivalsProductResponseModel
@@ -65,16 +75,19 @@ fun HomePage(
     val banners by viewModel.bannerData.observeAsState(emptyList())
     val featuredProducts by viewModel.featuredProducts.observeAsState(emptyList())
     val newArrivalsProducts by viewModel.newArrivalsProducts.observeAsState(emptyList())
+    val categoryData by viewModel.categoryData.observeAsState(emptyList())
     LaunchedEffect(Unit) {
         viewModel.getHomeRequiredData()
         viewModel.fetchFeaturedProduct()
         viewModel.fetchNewArrivalsProduct()
+        viewModel.getCategoryList()
     }
     if (loading) {
         LoadingView()
     } else {
         HomeContent(
             banners = banners,
+            categoryData,
             featuredProductResponseModel = featuredProducts,
             newArrivalsProductResponseModel = newArrivalsProducts,
             onItemClick,
@@ -86,6 +99,7 @@ fun HomePage(
 @Composable
 fun HomeContent(
     banners: List<HomeDataResponseModel.Banner>,
+    category: List<CategoryModel>,
     featuredProductResponseModel: List<FeaturedProductResponseModel.Data>,
     newArrivalsProductResponseModel: List<NewArrivalsProductResponseModel.Data>,
     onItemClick: (String) -> Unit,
@@ -125,6 +139,12 @@ fun HomeContent(
                     onBuyClick
                 )
                 Spacer(modifier = Modifier.height(16.dp))
+            }
+
+            item {
+                CategorySection(
+                    category = category
+                )
             }
         }
     }
@@ -233,6 +253,84 @@ fun BannerItem(
 }
 
 @Composable
+fun CategorySection(category: List<CategoryModel>) {
+
+    Column(modifier = Modifier.fillMaxWidth()) {
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text("Category", fontWeight = FontWeight.Bold)
+            Text("View All →", color = Color.Red)
+        }
+
+        Spacer(Modifier.height(12.dp))
+
+        val rows = category.chunked(3)
+
+        rows.forEach { rowItems ->
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                rowItems.forEach {
+                    Box(modifier = Modifier.weight(1f)) {
+                        CategoryCard(it)
+                    }
+                }
+
+                repeat(3 - rowItems.size) {
+                    Spacer(modifier = Modifier.weight(1f))
+                }
+            }
+
+            Spacer(Modifier.height(8.dp))
+        }
+    }
+}
+
+
+
+
+@Composable
+fun CategoryCard(
+    category: CategoryModel
+) {
+    Column(
+        modifier = Modifier.fillMaxWidth()
+            .padding(10.dp),
+        verticalArrangement = Arrangement.Center
+    ) {
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(30.dp),
+            elevation = CardDefaults.cardElevation(1.dp)
+        ) {
+            AsyncImage(
+                model = category.catImage,
+                contentDescription = category.catName,
+                modifier = Modifier
+                    .fillMaxSize(),
+                contentScale = ContentScale.Crop
+            )
+        }
+        Spacer(Modifier.fillMaxWidth().height(6.dp))
+        Text(
+            text = category.catName,
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.fillMaxWidth()
+        )
+    }
+}
+
+@Composable
 fun NewArrivalsProductsSection(
     products: List<NewArrivalsProductResponseModel.Data>,
     onItemClick: (String) -> Unit,
@@ -255,7 +353,7 @@ fun NewArrivalsProductsSection(
             )
 
             Text(
-                text = "View All →",
+                text = "View All ->",
                 color = Color.Red,
                 fontSize = 14.sp
             )
@@ -298,7 +396,7 @@ fun FeaturedProductsSection(
             )
 
             Text(
-                text = "View All →",
+                text = "View All ->",
                 color = Color.Red,
                 fontSize = 14.sp
             )

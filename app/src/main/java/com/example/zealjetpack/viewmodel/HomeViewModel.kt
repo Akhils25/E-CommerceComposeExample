@@ -3,6 +3,7 @@ package com.example.zealjetpack.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.zealjetpack.model.CategoryModel
 import com.example.zealjetpack.model.FeaturedProductResponseModel
 import com.example.zealjetpack.model.HomeDataResponseModel
 import com.example.zealjetpack.model.NewArrivalsProductResponseModel
@@ -24,9 +25,14 @@ class HomeViewModel : ViewModel() {
 
     private val newArrivalsFullList = ArrayList<NewArrivalsProductResponseModel.Data>()
 
+    private val _categoryData = MutableLiveData<ArrayList<CategoryModel>>()
+    val categoryData: LiveData<ArrayList<CategoryModel>> get() = _categoryData
+
     private val featuredFullList = ArrayList<FeaturedProductResponseModel.Data>()
 
     private val bannerList = ArrayList<HomeDataResponseModel.Banner>()
+
+    private val categoryList = ArrayList<CategoryModel>()
 
 
     fun getHomeRequiredData(
@@ -265,6 +271,55 @@ class HomeViewModel : ViewModel() {
             )
         )
         _newArrivalsProducts.value = newArrivalsFullList
+        _isLoading.value = false
+    }
+
+    fun getCategoryList() {
+        _isLoading.value = true
+        categoryList.clear()
+        categoryList.add(
+            CategoryModel(
+                "101",
+                "Mutton",
+                "https://i.postimg.cc/pLqPs2X1/13fe3ffa0f1409376993991173534de99fd49da8.png"
+            )
+        )
+        categoryList.add(
+            CategoryModel(
+                "102",
+                "Chicken",
+                "https://i.postimg.cc/d0fwK4Cf/c3ce697982a3075e7761237222304def8c87fa4e.png"
+            )
+        )
+        categoryList.add(
+            CategoryModel(
+                "103",
+                "Pork",
+                "https://i.postimg.cc/8zKVhtZ8/6ecd0ab9745b421ac7631b7dab097ddf6d9b4670.png"
+            )
+        )
+        categoryList.add(
+            CategoryModel(
+                "104",
+                "Beaf",
+                "https://i.postimg.cc/XqbMVhYB/b86abb1d2eb8bb03e588777cce5cdc6aa870d900.png"
+            )
+        )
+        categoryList.add(
+            CategoryModel(
+                "105",
+                "Fish",
+                "https://i.postimg.cc/PrdG9B7c/124bcc2dd0575aac7a9865b7754ac36fd71567c3.png"
+            )
+        )
+        categoryList.add(
+            CategoryModel(
+                "106",
+                "Egg",
+                "https://i.postimg.cc/Dwz9y17h/d3e717c9cf92d1365ec64ab2d663ccb133d1cca9.png"
+            )
+        )
+        _categoryData.value = categoryList
         _isLoading.value = false
     }
 }
