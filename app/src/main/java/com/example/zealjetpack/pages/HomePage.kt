@@ -57,7 +57,8 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun HomePage(
-    onItemClick: (String) -> Unit = {}
+    onItemClick: (String) -> Unit = {},
+    onBuyClick: (String) -> Unit
 ) {
     val viewModel: HomeViewModel = viewModel()
     val loading by viewModel.isLoading.observeAsState(initial = false)
@@ -76,7 +77,8 @@ fun HomePage(
             banners = banners,
             featuredProductResponseModel = featuredProducts,
             newArrivalsProductResponseModel = newArrivalsProducts,
-            onItemClick
+            onItemClick,
+            onBuyClick
         )
     }
 }
@@ -86,7 +88,8 @@ fun HomeContent(
     banners: List<HomeDataResponseModel.Banner>,
     featuredProductResponseModel: List<FeaturedProductResponseModel.Data>,
     newArrivalsProductResponseModel: List<NewArrivalsProductResponseModel.Data>,
-    onItemClick: (String) -> Unit
+    onItemClick: (String) -> Unit,
+    onBuyClick: (String) -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -109,7 +112,8 @@ fun HomeContent(
             item {
                 FeaturedProductsSection(
                     products = featuredProductResponseModel,
-                    onItemClick
+                    onItemClick,
+                    onBuyClick
                 )
                 Spacer(modifier = Modifier.height(16.dp))
             }
@@ -117,7 +121,8 @@ fun HomeContent(
             item {
                 NewArrivalsProductsSection(
                     products = newArrivalsProductResponseModel,
-                    onItemClick
+                    onItemClick,
+                    onBuyClick
                 )
                 Spacer(modifier = Modifier.height(16.dp))
             }
@@ -230,7 +235,8 @@ fun BannerItem(
 @Composable
 fun NewArrivalsProductsSection(
     products: List<NewArrivalsProductResponseModel.Data>,
-    onItemClick: (String) -> Unit
+    onItemClick: (String) -> Unit,
+    onBuyClick: (String) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -258,7 +264,11 @@ fun NewArrivalsProductsSection(
 
         LazyRow {
             items(products) { it ->
-                ProductCardNewArrivals(it, onItemClick) // For New Arrivals Products Listing
+                ProductCardNewArrivals(
+                    it,
+                    onItemClick,
+                    onBuyClick
+                ) // For New Arrivals Products Listing
             }
         }
     }
@@ -267,7 +277,8 @@ fun NewArrivalsProductsSection(
 @Composable
 fun FeaturedProductsSection(
     products: List<FeaturedProductResponseModel.Data>,
-    onItemClick: (String) -> Unit
+    onItemClick: (String) -> Unit,
+    onBuyClick: (String) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -297,7 +308,7 @@ fun FeaturedProductsSection(
 
         LazyRow {
             items(products) { it ->
-                ProductCardFeatured(it, onItemClick) // For Featured Products Listing
+                ProductCardFeatured(it, onItemClick, onBuyClick) // For Featured Products Listing
             }
         }
     }
@@ -306,7 +317,8 @@ fun FeaturedProductsSection(
 @Composable
 fun ProductCardNewArrivals(
     product: NewArrivalsProductResponseModel.Data,
-    onItemClick: (String) -> Unit
+    onItemClick: (String) -> Unit,
+    onBuyClick: (String) -> Unit
 ) {
     Card(
         modifier = Modifier
@@ -396,7 +408,7 @@ fun ProductCardNewArrivals(
             Spacer(modifier = Modifier.height(8.dp))
 
             Button(
-                onClick = { },
+                onClick = { onBuyClick(product.productId ?: "") },
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
             ) {
@@ -409,7 +421,8 @@ fun ProductCardNewArrivals(
 @Composable
 fun ProductCardFeatured(
     product: FeaturedProductResponseModel.Data,
-    onItemClick: (String) -> Unit
+    onItemClick: (String) -> Unit,
+    onBuyClick: (String) -> Unit
 ) {
     Card(
         modifier = Modifier
@@ -499,7 +512,7 @@ fun ProductCardFeatured(
             Spacer(modifier = Modifier.height(8.dp))
 
             Button(
-                onClick = { },
+                onClick = { onBuyClick(product.productId ?: "") },
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
             ) {

@@ -36,6 +36,8 @@ class MainActivity : ComponentActivity() {
                     HomePage(
                         onItemClick = { productId ->
                             navController.navigate("Detail/$productId")
+                        }, { productId ->
+                            navController.navigate("Cart/$productId")
                         }
                     )
                 }
